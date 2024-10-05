@@ -24,6 +24,13 @@ def text_to_speech(text: str):
         return -1
 
 
+def delete_audio_file(file_path: str):
+    try:
+        pathlib.Path(file_path).unlink()
+    except:
+        return -1
+
+
 if __name__ == "__main__":
     text_to_speech(
         "Testing, testing, 1...2...3. AHHHHHHHHH TESTING TESTING DOES THIS WORK. IS THIS THING ON."

@@ -9,6 +9,7 @@ from flask import Flask, request, Response, send_from_directory
 from twilio.twiml.voice_response import VoiceResponse, Gather
 from datetime import datetime
 from AIOrchestrator.orchestra import orchestrate, delete_context_by_caller_id
+from tts.text_to_speech import delete_audio_file
 
 app = Flask(__name__)
 
@@ -80,6 +81,7 @@ def qa_handler():
             method="POST",
         )
         gather.play(audio_url)
+        delete_audio_file(ttsPath)
         gather.say("Please ask your question.")
         response.append(gather)
 
