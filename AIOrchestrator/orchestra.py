@@ -13,7 +13,11 @@ from Roberta.roberta import roberta_response
 context_dict = {}
 
 def orchestrate(usrPrompt: str, caller_id):
-    response = advance_generate_response(usrPrompt)
+    if caller_id in context_dict:
+        response = advance_generate_response(usrPrompt, context_dict[caller_id])
+    else:
+        response = advance_generate_response(usrPrompt)
+
     try:
         # Remove the ```json and ``` from the response string
         response = response.replace("```json", "").replace("```", "").strip()
