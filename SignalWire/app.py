@@ -57,6 +57,11 @@ def qa_handler():
         ttsPath = orchestrate(usrPrompt)
         filename = os.path.basename(ttsPath)
         audio_url = f"{request.url_root}audio/{filename}"
+        
+        # DEBUG STATEMENTS
+        
+        print(f"Audio file path: {ttsPath}")
+        print(f"Audio URL: {audio_url}")
 
         gather = Gather(input='speech', timeout=30, speech_timeout='auto', action='/gather', method='POST')
         gather.say('Please ask your question.')
@@ -68,6 +73,8 @@ def qa_handler():
 # Handles audio files and sends them to the qa_handler
 @app.route('/audio/<filename>')
 def audio(filename):
+    file_path = os.path.join(app.root_path, 'tts/audio_files', filename)
+    print(f"Serving audio file from: {file_path}")
     return send_from_directory(os.path.join(app.root_path, 'tts/audio_files/'), filename)
 
 if __name__ == "__main__":
