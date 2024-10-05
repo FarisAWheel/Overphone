@@ -32,5 +32,5 @@ def orchestrate(usrPrompt: str):
 
 if __name__ == "__main__":
     orchestrate(
-        "Hi my name is Ballard Alice my pin is 1234 and I would like to know my account balance."
+        "Hi my name is Alice my pin is 1234 and I would like to know my account balance."
     )
