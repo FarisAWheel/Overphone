@@ -20,17 +20,15 @@ def orchestrate(usrPrompt: str):
         response = roberta_response(
             response["name"], response["pin"], response["question"]
         )
+
+        # Extract the text response from the dictionary
+        response = response.get("answer", "")
     except json.JSONDecodeError:
         pass
 
-    # Extract the text response from the dictionary
-    text_response = response.get("answer", "")
-
     # Generates an audio file from the response to be used in the call
-    return text_to_speech(text_response)
+    return text_to_speech(response)
 
 
 if __name__ == "__main__":
-    orchestrate(
-        "Hi! How much money do I have in my checking account? My name is Alice and my PIN is 1234."
-    )
+    orchestrate("What did you hear me know")
