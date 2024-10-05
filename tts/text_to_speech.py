@@ -6,7 +6,7 @@ def text_to_speech(text: str):
     client = OpenAI()
     stream_file_path: str = (
         str(pathlib.Path(__file__).parent.resolve())
-        + "/audio_files/"
+        + "\\audio_files\\"
         + str(abs(hash(text)))
         + ".mp3"
     )

@@ -1,5 +1,6 @@
 import sys
 import os
+import pathlib
 
 # Add the directory containing AIOrchestrator to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -25,8 +26,7 @@ def welcome_handler():
 
     # Generate a test response (Will be replaced by AI Orchestrator)
     response = VoiceResponse()
-    response.say("Hello, this call will have a transcript stored for development purposes.\
-                 No recordings of the call will be stored.")
+    response.say("Hello")
 
     # Redirects to the gather endpoint to get user input
     gather = Gather(input='speech', timeout=30, speech_timeout='auto', action='/gather', method='POST')
@@ -64,8 +64,8 @@ def qa_handler():
         print(f"Audio URL: {audio_url}")
 
         gather = Gather(input='speech', timeout=30, speech_timeout='auto', action='/gather', method='POST')
-        gather.say('Please ask your question.')
         gather.play(audio_url)
+        gather.say('Please ask your question.')
         response.append(gather)
 
     return Response(response.to_xml(), mimetype='text/xml')
@@ -73,9 +73,9 @@ def qa_handler():
 # Handles audio files and sends them to the qa_handler
 @app.route('/audio/<filename>')
 def audio(filename):
-    file_path = os.path.join(app.root_path, 'tts/audio_files', filename)
+    file_path = os.path.join(pathlib.Path(__file__).parent.parent.resolve(), 'tts\\audio_files', filename)
     print(f"Serving audio file from: {file_path}")
-    return send_from_directory(os.path.join(app.root_path, 'tts/audio_files/'), filename)
+    return send_from_directory(os.path.join(pathlib.Path(__file__).parent.parent.resolve(), 'tts/audio_files/'), filename)
 
 if __name__ == "__main__":
     app.run(port=5000)

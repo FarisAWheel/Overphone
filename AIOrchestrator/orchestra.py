@@ -21,8 +21,6 @@ def orchestrate(usrPrompt: str):
             response["name"], response["pin"], response["question"]
         )
 
-        # Extract the text response from the dictionary
-        response = response.get("answer", "")
     except json.JSONDecodeError:
         pass
 
