@@ -1,4 +1,5 @@
 .venv
+*.mp3
 Roberta/__pycache__
 __pycache__
 audio_files
