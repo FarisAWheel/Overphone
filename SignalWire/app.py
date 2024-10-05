@@ -39,13 +39,13 @@ def qa_handler():
     # Whenever user input is recieved, this will handle it
     print(request.values)
 
-    # Get user input
-    response.say('Please ask your question.')
-    usrPrompt = request.values.get('SpeechResult')     
-
     # Generate a test response (Will be replaced by AI Orchestrator)
         
     response = VoiceResponse()
+
+    # Get user input
+    response.say("Please ask your question.")
+    usrPrompt = request.values.get('SpeechResult')     
 
     if "goodbye" in usrPrompt.lower():
         response.say("Goodbye!")
