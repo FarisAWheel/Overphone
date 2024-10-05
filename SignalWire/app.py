@@ -18,13 +18,8 @@ def call_handler():
     # Generate a test response (Will be replaced by AI Orchestrator)
     response = VoiceResponse()
     response.say(f"Hello, Faris or maybe not Faris. The current time is {now.strftime('%H:%M')}")
-    response.say(f"Your phone number ends in {caller[-3]}.")
 
-    # Gather user input (Will be heavily changed by AI Orchestrator)
-    gather = Gather(input='speech', timeout=30, speech_timeout='auto', action='/gather', method='POST')
-    gather.say('Please ask your question after the beep.')
-    gather.play('https://www.soundbible.com/mp3/Beep-SoundBible.com-923660219.mp3')  # Play a different beep sound
-    response.append(gather)
+    response.redirect('/gather', method='POST')
 
     return Response(response.to_xml(), mimetype='text/xml')
 
