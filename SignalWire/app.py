@@ -29,7 +29,9 @@ def welcome_handler():
                  No recordings of the call will be stored.")
 
     # Redirects to the gather endpoint to get user input
-    response.redirect('/gather', method='POST')
+    gather = Gather(input='speech', timeout=30, speech_timeout='auto', action='/gather', method='POST')
+    gather.say('Please ask your question.')
+    response.append(gather)
 
     return Response(response.to_xml(), mimetype='text/xml')
 
