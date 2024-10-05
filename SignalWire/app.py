@@ -19,6 +19,7 @@ def call_handler():
     response = VoiceResponse()
     response.say(f"Hello, Faris or maybe not Faris. The current time is {now.strftime('%H:%M')}")
 
+    # Redirects to the gather endpoint to get user input
     response.redirect('/gather', method='POST')
 
     return Response(response.to_xml(), mimetype='text/xml')
