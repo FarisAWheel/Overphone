@@ -6,7 +6,7 @@ from sys import path
 # Add the path to the parent directory
 path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from AdvanceAi.AdvanceAI import advance_generate_response
+from AdvanceAI.AdvanceAI import advance_generate_response
 from tts.text_to_speech import text_to_speech
 from Roberta.roberta import roberta_response
 
