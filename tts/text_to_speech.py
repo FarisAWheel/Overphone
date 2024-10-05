@@ -11,7 +11,12 @@ def text_to_speech(text: str):
         input=text,
     )
 
-    response.stream_to_file(stream_file_path)
+    try:
+        response.stream_to_file(stream_file_path)
+        return stream_file_path
+    except:
+        return -1
+
 
 if __name__ == "__main__":
     text_to_speech("Testing, testing, 1...2...3. AHHHHHHHHH TESTING TESTING DOES THIS WORK. IS THIS THING ON.");
