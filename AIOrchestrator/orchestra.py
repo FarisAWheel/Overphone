@@ -21,8 +21,8 @@ def orchestrate(usrPrompt: str):
             response["name"], response["pin"], response["question"]
         )
 
-        # Extract the text response from the dictionary
-        response = response.get("answer", "")
+        print(response)
+
     except json.JSONDecodeError:
         pass
 
@@ -31,4 +31,6 @@ def orchestrate(usrPrompt: str):
 
 
 if __name__ == "__main__":
-    orchestrate("What did you hear me know")
+    orchestrate(
+        "Hi my name is Ballard Alice my pin is 1234 and I would like to know my account balance."
+    )

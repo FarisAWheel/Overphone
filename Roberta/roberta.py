@@ -61,7 +61,7 @@ def get_user_info(user_name, pin):
 def roberta_response(user_name, pin, question):
     context = get_user_info(user_name, pin)
     if context == "User not found.":
-        return {"answer": context}
+        return "User not found."
 
     response = pipe(question=question, context=context)
 
