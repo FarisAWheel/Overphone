@@ -62,7 +62,7 @@ def qa_handler():
     else:
         # Generates a response from the AI Orchestra, and gets the path to the generated audio file
         # Then asks for a link using the filename, generating it through the audio function
-        ttsPath = orchestrate(usrPrompt)
+        ttsPath = orchestrate(usrPrompt, request.values.get("caller"))
         filename = os.path.basename(ttsPath)
         audio_url = f"{request.url_root}audio/{filename}"
 
