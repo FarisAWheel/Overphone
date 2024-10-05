@@ -10,8 +10,9 @@ from AdvanceAI.AdvanceAI import advance_generate_response
 from tts.text_to_speech import text_to_speech
 from Roberta.roberta import roberta_response
 
+context_dict = {}
 
-def orchestrate(usrPrompt: str):
+def orchestrate(usrPrompt: str, caller_id):
     response = advance_generate_response(usrPrompt)
     try:
         # Remove the ```json and ``` from the response string
@@ -25,6 +26,8 @@ def orchestrate(usrPrompt: str):
 
     except json.JSONDecodeError:
         pass
+
+    context_dict[caller_id] = { "user": usrPrompt, "assistant": response }
 
     # Generates an audio file from the response to be used in the call
     return text_to_speech(response)
