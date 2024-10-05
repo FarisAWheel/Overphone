@@ -1,14 +1,17 @@
 # The main file for the AI Orchestrator module
-from AdvanceAI.AdvanceAi import advance_generate_response
+import os
+import json
+from sys import path
+
+# Add the path to the parent directory
+path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from AdvanceAI.AdvanceAI import advance_generate_response
 from tts.text_to_speech import text_to_speech
 from Roberta.roberta import roberta_response
 
 
 def orchestrate(usrPrompt: str):
-    response = advance_generate_response(usrPrompt)
-
-    # Genereates an audio file from the response to be used in the call
-    return text_to_speech(response)
     response = advance_generate_response(usrPrompt)
     try:
         # Remove the ```json and ``` from the response string
@@ -20,8 +23,11 @@ def orchestrate(usrPrompt: str):
     except json.JSONDecodeError:
         pass
 
+    # Extract the text response from the dictionary
+    text_response = response.get("answer", "")
+
     # Generates an audio file from the response to be used in the call
-    return text_to_speech(response)
+    return text_to_speech(text_response)
 
 
 if __name__ == "__main__":
