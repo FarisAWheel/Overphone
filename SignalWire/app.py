@@ -40,6 +40,7 @@ def qa_handler():
     print(request.values)
 
     # Get user input
+    response.say('Please ask your question.')
     usrPrompt = request.values.get('SpeechResult')     
 
     # Generate a test response (Will be replaced by AI Orchestrator)
