@@ -5,7 +5,7 @@ from sys import path
 from openai import OpenAI  # type: ignore
 
 
-def advance_generate_response(user_prompt: str):
+def advance_generate_response(user_prompt: str, **kwargs):
     client = OpenAI()
     preprompts = (
         "You are an AI assistant providing customer support for a bank. "
@@ -22,12 +22,17 @@ def advance_generate_response(user_prompt: str):
         "7. Maintain professionalism, avoid bias, and ensure all responses are accurate, ethical, and secure."
     )
 
+    all_messages = [ {"role": "system", "content": preprompts} ]
+    if not kwargs:
+        all_messages.append( {"role": "user", "content": user_prompt} )
+    else:
+        for user, assistant in zip(kwargs["user"], kwargs["assistant"]):
+            all_messages.append( {"role": "user", "content": user} )
+            all_messages.append( {"role": "assistant", "content": assistant} )
+
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": preprompts},
-            {"role": "user", "content": user_prompt},
-        ],
+        messages=all_messages,
         n=1,
     )
 
