@@ -67,7 +67,12 @@ def qa_handler():
     usrPrompt = request.values.get("SpeechResult")
 
     if "goodbye" in usrPrompt.lower():
-        response.say("Goodbye!")
+        ttsPath = orchestrate("The user has said goodbye, please give a farewell message.")
+        filename = os.path.basename(ttsPath)
+        audio_url = f"{request.url_root}audio/{filename}"
+
+        response.play(audio_url)
+    
         response.hangup()
     else:
         # Generates a response from the AI Orchestra, and gets the path to the generated audio file
