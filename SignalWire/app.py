@@ -21,13 +21,10 @@ def call_handler():
     response.say(f"Your phone number ends in {caller[-2]}.")
 
     # Gather user input (Will be heavily changed by AI Orchestrator)
-    gather = Gather(input='speech', timeout=30, action='/gather', method='POST')
-    response.say('Please ask your question after the beep.')
+    gather = Gather(input='speech', timeout=30, speech_timeone='auto', action='/gather', method='POST')
+    gather.say('Please ask your question after the beep.')
+    gather.play('https://www.soundjay.com/button/beep-07.wav')  # Play a beep sound
     response.append(gather)
-
-    # If there is no input OR if the user says something to indicate the end, hangup
-    response.say("Goodbye!")
-    response.hangup()
 
     return Response(response.to_xml(), mimetype='text/xml')
 
@@ -37,12 +34,21 @@ def gather_handler():
     print(request.values)
 
     # Get user input
-    usrPrompt = request.values.get('SpeechResult')
+    usrPrompt = request.values.get('SpeechResult')     
 
     # Generate a test response (Will be replaced by AI Orchestrator)
     
     response = VoiceResponse()
     response.say(f"Your question was: {usrPrompt}")
+
+    if "goodbye" in usrPrompt.lower():
+        response.say("Goodbye!")
+        response.hangup()
+    else:
+        gather = Gather(input='speech', timeout=30, speech_timeone='auto', action='/gather', method='POST')
+        gather.say('Please ask your question after the beep.')
+        gather.play('https://www.soundjay.com/button/beep-07.wav')
+        response.append(gather)
 
     return Response(response.to_xml(), mimetype='text/xml')
 
