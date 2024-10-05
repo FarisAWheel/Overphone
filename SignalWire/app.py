@@ -25,14 +25,14 @@ def welcome_handler():
 
     # Get called number and time
     caller = request.values.get("From")
-    now = datetime.now()
 
     # Generate a test response (Will be replaced by AI Orchestrator)
     response = VoiceResponse()
 
     # Genereates a welcome message utilizing a pre-prompt, then plays it
     initPrompt = orchestrate(
-        "This is a pre-prompt that comes in when the User has succesfully connected, please welcome them accordingly."
+        "This is a pre-prompt that comes in when the User has succesfully connected, please welcome them accordingly.",
+        caller,
     )
     filename = os.path.basename(initPrompt)
     audio_url = f"{request.url_root}audio/{filename}"
