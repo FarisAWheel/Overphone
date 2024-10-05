@@ -31,7 +31,7 @@ def welcome_handler():
 
     # Genereates a welcome message utilizing a pre-prompt, then plays it
     initPrompt = orchestrate(
-        "This is a pre-prompt that comes in when the User has succesfully connected, please welcome them accordingly.",
+        "This is a pre-prompt that comes in when the User has succesfully connected, please welcome them accordingly especially according to the preprompt alreadys in system.",
         caller,
     )
     filename = os.path.basename(initPrompt)
