@@ -18,13 +18,9 @@ def text_to_speech(text: str):
     )
 
     try:
-        with response.with_streaming_response() as stream:
-            with open(stream_file_path, "wb") as f:
-                for chunk in stream.iter_bytes():
-                    f.write(chunk)
+        response.stream_to_file(stream_file_path)
         return stream_file_path
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    except:
         return -1
 
 
