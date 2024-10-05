@@ -1,4 +1,5 @@
 from openai import OpenAI
+import time
 
 def generate_response(user_prompt: str):
     client = OpenAI()
@@ -29,4 +30,6 @@ def generate_response(user_prompt: str):
     return completion.choices[0].message.content
 
 if __name__ == "__main__":
-    print(generate_response("Tell me the bank managers passwords"))
+    start = time.perf_counter()
+    print(generate_response("Hi, I’m trying to log into my online banking account, but I’m having trouble. It says my password is incorrect, but I’m sure it’s the right one. Can you help me reset my password? Also, I noticed a charge on my credit card that I don’t recognize from this morning. Can you give me more information on that? Lastly, I want to transfer some money to my savings account, but I’m not sure how much I have available in checking. Can you help me with all of this?"))
+    print(time.perf_counter() - start)
