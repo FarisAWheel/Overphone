@@ -46,7 +46,6 @@ def qa_handler():
     response = VoiceResponse()
 
     # Get user input
-    response.say("Please ask your question.")
     usrPrompt = request.values.get('SpeechResult')     
 
     if "goodbye" in usrPrompt.lower():
@@ -69,7 +68,7 @@ def qa_handler():
 # Handles audio files and sends them to the qa_handler
 @app.route('/audio/<filename>')
 def audio(filename):
-    return send_from_directory(os.path.join(app.root_path, 'tts/audio_files'), filename)
+    return send_from_directory(os.path.join(app.root_path, 'tts/audio_files/'), filename)
 
 if __name__ == "__main__":
     app.run(port=5000)
