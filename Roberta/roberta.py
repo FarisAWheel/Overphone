@@ -65,7 +65,7 @@ def roberta_response(user_name, pin, question):
 
     response = pipe(question=question, context=context)
 
-    return response
+    return response["answer"]
 
 
 if __name__ == "__main__":
