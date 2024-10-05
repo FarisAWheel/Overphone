@@ -21,7 +21,7 @@ def orchestrate(usrPrompt: str, caller_id):
     # Adds the current user prompt to the context
     context_dict[caller_id]["user"].append(usrPrompt)
 
-    response = advance_generate_response(usrPrompt, context_dict[caller_id])
+    response = advance_generate_response(context_dict[caller_id])
 
     try:
         # Remove the ```json and ``` from the response string
@@ -41,6 +41,11 @@ def orchestrate(usrPrompt: str, caller_id):
 
     # Generates an audio file from the response to be used in the call
     return text_to_speech(response)
+
+
+def delete_context_by_caller_id(caller_id):
+    # Deletes the context for a specific caller
+    del context_dict[caller_id]
 
 
 if __name__ == "__main__":

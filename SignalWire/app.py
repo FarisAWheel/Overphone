@@ -8,7 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from flask import Flask, request, Response, send_from_directory
 from twilio.twiml.voice_response import VoiceResponse, Gather
 from datetime import datetime
-from AIOrchestrator.orchestra import orchestrate
+from AIOrchestrator.orchestra import orchestrate, delete_context_by_caller_id
 
 app = Flask(__name__)
 
@@ -58,6 +58,7 @@ def qa_handler():
 
     if "goodbye" in usrPrompt.lower():
         response.say("Goodbye!")
+        delete_context_by_caller_id(request.values.get("caller"))
         response.hangup()
     else:
         # Generates a response from the AI Orchestra, and gets the path to the generated audio file
