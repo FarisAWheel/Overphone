@@ -8,7 +8,10 @@ nltk.download('punkt')
 nltk.download('punkt_tab')
 
 # Loads model for emotion classification
-classifier = pipeline("text-classification", model="bhadresh-savani/distilbert-base-uncased-emotion")
+try:
+    classifier = pipeline("text-classification", model="bhadresh-savani/distilbert-base-uncased-emotion")
+except: 
+    print("Error loading model")
 
 # The isComplex(text) function takes a text as input, returns 1 if text is comlex, 0 if simple
 def isComplex(text):
