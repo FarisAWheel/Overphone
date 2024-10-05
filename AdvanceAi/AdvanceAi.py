@@ -2,10 +2,6 @@ import os
 import json
 from sys import path
 
-# Add the path to the parent directory
-path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from Roberta.roberta import roberta_response
 from openai import OpenAI  # type: ignore
 
 
@@ -36,25 +32,3 @@ def advance_generate_response(user_prompt: str):
     )
 
     return completion.choices[0].message.content
-
-
-if __name__ == "__main__":
-
-    response = advance_generate_response(
-        "Hi! How much money do I have in my checking account? My name is Alice and my PIN is 1234."
-    )
-    try:
-        # Remove the ```json and ``` from the response string
-        response = response.replace("```json", "").replace("```", "").strip()
-        response_json = json.loads(response)
-
-    except json.JSONDecodeError:
-        print("Failed to parse response as JSON.")
-        response_json = {}
-
-    user_name = response_json.get("name")
-    pin = response_json.get("pin")
-    question = response_json.get("question")
-
-    result = roberta_response(user_name, pin, question)
-    print(result["answer"])
