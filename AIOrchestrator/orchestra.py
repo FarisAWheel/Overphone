@@ -10,13 +10,17 @@ from AdvanceAI.AdvanceAI import advance_generate_response
 from tts.text_to_speech import text_to_speech
 from Roberta.roberta import roberta_response
 
-context_dict = {}
+context_dict: dict[str, dict[str, list[str]]] = {}
 
 def orchestrate(usrPrompt: str, caller_id):
-    if caller_id in context_dict:
-        response = advance_generate_response(usrPrompt, context_dict[caller_id])
-    else:
-        response = advance_generate_response(usrPrompt)
+    # If this is an ongoing
+    if caller_id not in context_dict:
+        context_dict[caller_id] = {
+            "user": [],
+            "assistant": []
+        }
+
+    response = advance_generate_response(usrPrompt, context_dict[caller_id])
 
     try:
         # Remove the ```json and ``` from the response string
@@ -31,7 +35,8 @@ def orchestrate(usrPrompt: str, caller_id):
     except json.JSONDecodeError:
         pass
 
-    context_dict[caller_id] = { "user": usrPrompt, "assistant": response }
+    context_dict[caller_id]["user"].append(usrPrompt)
+    context_dict[caller_id]["assistant"].append(response)
 
     # Generates an audio file from the response to be used in the call
     return text_to_speech(response)

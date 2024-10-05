@@ -5,7 +5,7 @@ from sys import path
 from openai import OpenAI  # type: ignore
 
 
-def advance_generate_response(user_prompt: str, context: dict[str, str] = None):
+def advance_generate_response(user_prompt: str, context: dict[str, list[str]]):
     client = OpenAI()
     preprompts = (
         "You are an AI assistant providing customer support for a bank. "
