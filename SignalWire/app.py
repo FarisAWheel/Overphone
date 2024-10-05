@@ -1,8 +1,13 @@
+import sys
+import os
+
+# Add the directory containing AIOrchestrator to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from flask import Flask, request, Response, send_from_directory
 from twilio.twiml.voice_response import VoiceResponse, Gather
 from datetime import datetime
 from AIOrchestrator.orchestra import orchestrate
-import os
 
 app = Flask(__name__)
 
