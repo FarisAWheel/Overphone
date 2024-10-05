@@ -47,7 +47,7 @@ def get_user_info(user_name, pin):
         if user["name"].lower() == user_name.lower() and user["pin"] == pin:
             accounts_info = " ".join(
                 [
-                    f"{acc['account_type']} account with amount {acc['amount']} created on {acc['creation_date']}.\n"
+                    f"{acc['account_type']} account with amount {acc['amount']}.\n"
                     for acc in user["accounts"]
                 ]
             )
