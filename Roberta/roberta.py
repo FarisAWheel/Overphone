@@ -2,7 +2,7 @@ from transformers import pipeline  # type: ignore
 
 # Use the pipeline function to load the RoBERTa model
 pipe = pipeline(
-    "question-answering", model="deepset/roberta-base-squad2", device=0
+    "question-answering", model="deepset/roberta-base-squad2", device=-1
 )  # Use GPU if available
 
 # Example JSON object containing multiple users' bank information
