@@ -15,7 +15,6 @@ bank_info = {
                 {
                     "account_type": "savings",
                     "amount": 5000,
-                    "creation_date": "2020-01-01",
                 },
             ],
         },
@@ -26,7 +25,6 @@ bank_info = {
                 {
                     "account_type": "checking",
                     "amount": 3000,
-                    "creation_date": "2021-02-20",
                 },
             ],
         },
@@ -37,7 +35,6 @@ bank_info = {
                 {
                     "account_type": "business",
                     "amount": 10000,
-                    "creation_date": "2021-07-19",
                 },
             ],
         },
