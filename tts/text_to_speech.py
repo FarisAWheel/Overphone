@@ -20,8 +20,7 @@ def text_to_speech(text: str):
     try:
         response.stream_to_file(stream_file_path)
         return stream_file_path
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    except:
         return -1
 
 
