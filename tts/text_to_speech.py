@@ -16,7 +16,11 @@ def text_to_speech(text: str):
     )
 
     speech_config = speechsdk.SpeechConfig(
-        subscription=subscription_key, region=service_region
+        subscription=subscription_key,
+        region=service_region,
+    )
+    speech_config.set_speech_synthesis_output_format(
+        speechsdk.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3
     )
     speech_config.speech_synthesis_voice_name = "en-US-AriaNeural"
     temp_file_path = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False).name
