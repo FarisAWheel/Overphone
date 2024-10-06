@@ -67,7 +67,14 @@ def qa_handler():
     usrPrompt = request.values.get("SpeechResult")
 
     if "goodbye" in usrPrompt.lower():
-        response.say("Goodbye!")
+        ttsPath = orchestrate(
+            "The user has said goodbye, please give a farewell message."
+        )
+        filename = os.path.basename(ttsPath)
+        audio_url = f"{request.url_root}audio/{filename}"
+
+        response.play(audio_url)
+
         delete_context_by_caller_id(request.values.get("caller"))
         response.hangup()
     else:
