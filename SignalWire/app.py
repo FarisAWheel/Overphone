@@ -38,16 +38,16 @@ def welcome_handler():
 
     # debuhg
     print("_>>>>>>>>>>>" + audio_url)
-    time.sleep(2)
+ 
 
     response.play(audio_url)
 
-    time.sleep(1)
+   
 
     # Redirects to the gather endpoint to get user input
     gather = Gather(
         input="speech",
-        timeout=60,
+        timeout=190,
         speech_timeout="auto",
         action="/gather",
         method="POST",
@@ -83,16 +83,28 @@ def qa_handler():
 
         response.hangup()
 
+        print(request.values.get("From") + "_goodbye.txt")
+        file_path = f"SignalWire/{request.values.get("From")}_goodbye.txt"
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print(f"Deleted file: {file_path}")
+        else:
+            print(f"File not found: {file_path}")
+
+            
+
     else:
         filename = os.path.basename(ttsPath)
         audio_url = f"{request.url_root}audio/{filename}"
+
+        print(audio_url)
 
         # Play audio file first, then listen for more input
         # response.play(audio_url)
 
         gather = Gather(
             input="speech",
-            timeout=30,
+            timeout=190,
             speech_timeout="auto",
             action="/gather",
             method="POST",

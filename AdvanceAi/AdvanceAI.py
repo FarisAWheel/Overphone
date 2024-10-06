@@ -43,6 +43,7 @@ def advance_generate_response(context: dict[str, list[str]]):
         model="gpt-4o-mini",
         messages=all_messages,
         n=1,
+        max_tokens=168,
     )
 
     return completion.choices[0].message.content
