@@ -95,14 +95,14 @@ def qa_handler():
             # Play audio file first, then listen for more input
             # response.play(audio_url)
 
-            gather = Gather(
-                input="speech",
-                timeout=30,
-                speech_timeout="auto",
-                action="/gather",
-                method="POST",
-            )
-            gather.play(audio_url)
+        gather = Gather(
+            input="speech",
+            timeout=30,
+            speech_timeout="auto",
+            action="/gather",
+            method="POST",
+        )
+        gather.play(audio_url)
         response.append(gather)
 
     return Response(response.to_xml(), mimetype="text/xml")
