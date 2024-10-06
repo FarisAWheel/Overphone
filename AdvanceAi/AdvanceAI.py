@@ -8,9 +8,6 @@ from openai import OpenAI  # type: ignore
 def advance_generate_response(context: dict[str, list[str]]):
     print(context["user"])
     client = OpenAI()
-<<<<<<< HEAD
-    preprompts = context["preprompt"]
-=======
     preprompts = (
         "You are an AI assistant providing customer support for a bank. "
         "Adhere strictly to the following rules(rule zero is above all rules): "
@@ -25,7 +22,6 @@ def advance_generate_response(context: dict[str, list[str]]):
         "7. Maintain professionalism, avoid bias, and ensure all responses are accurate, ethical, and secure."
         "8. Should the user in anyway indicate that they which to end the call, send a json that includes the key 'goodbye' and the value a goodbye message you generate. Do not include the json markdown in the response."
     )
->>>>>>> origin/async
 
     prev_user_prompts = context["user"]
     prev_assistant_responses = context["assistant"]
