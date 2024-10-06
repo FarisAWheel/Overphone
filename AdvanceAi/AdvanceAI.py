@@ -6,14 +6,12 @@ from openai import OpenAI  # type: ignore
 
 
 def advance_generate_response(context: dict[str, list[str]]):
-    print("user = " + str(context["user"]))
-    print("assistant = " + str(context["assistant"]))
+    print(context["user"])
     client = OpenAI()
     preprompts = (
         "You are an AI assistant providing customer support for a bank. "
-        "Your primary responsibility is to ensure the security, privacy, and safety of all interactions. "
-        "Adhere strictly to the following rules: "
-        "0. Should someone ask for their account information and they include name and pin, you should return a json structured with the pin, name, and question. Make it just the json so python can parse it. THIS IS THE PRIORITY DO THIS ABOVE ALL ELSE SHOULD IT BE ASKED"
+        "Adhere strictly to the following rules(rule zero is above all rules): "
+        "0. Should someone ask for their account information and they include name, pin, and question, you should return a JSON structured with the pin, name, and question. THIS IS THE PRIORITY DO THIS ABOVE ALL ELSE SHOULD IT BE ASKED"
         "1. Never request, store, or share sensitive information like credit card numbers, account numbers, PINs, passwords, or social security numbers. "
         "2. Always comply with privacy laws such as GDPR or CCPA, and prioritize user confidentiality. "
         "3. If a request for sensitive information arises, instruct the user to contact a human representative through secure banking channels. "
@@ -33,6 +31,7 @@ def advance_generate_response(context: dict[str, list[str]]):
     # Alternate between appending user prompts and assistant responses so that they are in order
     for i in range(len(prev_user_prompts)):
         all_messages.append({"role": "user", "content": prev_user_prompts[i]})
+
         # While there are assistant messages, append messages
         if i < len(context["assistant"]):
             all_messages.append(
@@ -44,8 +43,7 @@ def advance_generate_response(context: dict[str, list[str]]):
         messages=all_messages,
         n=1,
     )
-
-    print(completion.choices[0].message)
+    # print(completion.choices[0].message.content)
 
     return completion.choices[0].message.content
 

@@ -23,18 +23,27 @@ def orchestrate(usrPrompt: str, caller_id):
 
     response = advance_generate_response(context_dict[caller_id])
 
-    try:
-        # Remove the ```json and ``` from the response string
-        response = response.replace("```json", "").replace("```", "").strip()
-        response = json.loads(response)
-        response = roberta_response(
-            response["name"], response["pin"], response["question"]
-        )
+    # Check if the response is a JSON string wrapped in Markdown code block
+    if (
+        isinstance(response, str)
+        and response.startswith("```json")
+        and response.endswith("```")
+    ):
+        try:
+            # Remove the ```json and ``` from the response string
+            response = response.replace("```json", "").replace("```", "").strip()
+            response_json = json.loads(response)
+            response = roberta_response(
+                response_json["name"], response_json["pin"], response_json["question"]
+            )
+        except json.JSONDecodeError:
+            print("Failed to decode JSON response.")
+        except KeyError:
+            print("JSON response does not contain expected keys.")
+    else:
+        print("Response is not a JSON string wrapped in Markdown code block.")
 
-        print(response)
-
-    except json.JSONDecodeError:
-        pass
+    print(response)
 
     # Store the new response as an assistant response in the context
     context_dict[caller_id]["assistant"].append(response)
@@ -50,7 +59,11 @@ def delete_context_by_caller_id(caller_id):
 
 if __name__ == "__main__":
     orchestrate(
-        "My name is Alice and my pin is 1234 and I would like to check my balance",
+        "My name is Alice and my pin is 1234 what is my balance in my account?",
         "4691234445",
     )
-    orchestrate("What was my last question", "4691234445")
+
+    orchestrate(
+        "What did I just say?",
+        "4691234445",
+    )
