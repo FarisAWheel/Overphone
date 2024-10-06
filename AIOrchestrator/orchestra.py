@@ -31,6 +31,7 @@ def orchestrate(usrPrompt: str, caller_id, persona: str):
     context_dict[caller_id]["user"].append(usrPrompt)
 
     response = advance_generate_response(context_dict[caller_id])
+    print(response)
 
     try:
         # Attempt to parse the response as JSON
@@ -42,15 +43,19 @@ def orchestrate(usrPrompt: str, caller_id, persona: str):
             with open(f"SignalWire/{caller_id}_goodbye.txt", "w") as file:
                 file.write(response_json["goodbye"])
             return "CALL HAS ENDED"
-        response = roberta_response(
-             response_json["question"], persona, response_json["name"], response_json["pin"]
-        )
+        if "pin" in response_json:
+            response = roberta_response(
+                 response_json["question"], persona, response_json["name"], response_json["pin"]
+            )
+        else:
+            response = roberta_response(
+                 response_json["question"], persona, response_json["name"]
+            )
     except json.JSONDecodeError:
         print("Failed to decode JSON response.")
     except KeyError:
         print("JSON response does not contain expected keys.")
 
-    print(response)
 
     # Store the new response as an assistant response in the context
     context_dict[caller_id]["assistant"].append(response)
@@ -65,14 +70,15 @@ def delete_context_by_caller_id(caller_id):
 
 
 if __name__ == "__main__":
+    persona = "health"
     orchestrate(
-        "Hello, I'd like to check my balance. My pin is 9101 and my name is Charlie",
+        "Hello I am having an emergency and considering suicide",
         "123903123",
-        "bank"
+        persona
     )
     
     orchestrate(
         "You're the goat man, goodbye!!!!!!",
         "123903123",
-        "bank"
+        persona
     )

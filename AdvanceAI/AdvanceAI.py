@@ -15,10 +15,7 @@ def advance_generate_response(context):
     prev_assistant_responses = context["assistant"]
 
     # Send the pre-prompts as a system command to the gpt before everything else
-    all_messages = [{"role": "system", "content": preprompts}]
-    # for i in context["helper files"]:
-    #     with open(i, 'r') as file:
-    #         all_messages.append({"role": "system", "content": f"This is the {os.path.basename(i)} file:\n" + str(json.load(file))})
+    all_messages = [ {"role": "system", "content": preprompts} ]
 
     # Alternate between appending user prompts and assistant responses so that they are in order
     for i in range(len(prev_user_prompts)):
