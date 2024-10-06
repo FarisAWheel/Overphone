@@ -12,4 +12,4 @@ Overphone uses port 5001, so use
 
 `ngrok html 5001`
 
-to expost the right port for use.
+to expose the right port for use.
