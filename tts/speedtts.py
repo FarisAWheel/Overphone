@@ -10,7 +10,8 @@ TEXT = {
 FILENAME = ""
 
 
-def text_to_speech(text: str):
+def main():
+
     FILENAME: str = (
         str(pathlib.Path(__file__).parent.resolve())
         + "/audio_files/"
@@ -31,16 +32,6 @@ def text_to_speech(text: str):
     except Exception as e:
         print(f"Exception: {e}")
 
-    return FILENAME
-
-
-def delete_audio_file(file_path: str):
-    try:
-        pathlib.Path(file_path).unlink()
-    except:
-        return -1
-
 
 if __name__ == "__main__":
-    text_to_speech("This is a test of the text to speech function.")
-    print(pathlib.Path(__file__).parent.resolve())
+    main()
