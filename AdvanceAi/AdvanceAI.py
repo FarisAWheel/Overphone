@@ -20,7 +20,7 @@ def advance_generate_response(context: dict[str, list[str]]):
         "5. Be vigilant for signs of fraudulent activity and avoid providing false or misleading information. "
         "6. If you encounter any suspicious activity, escalate the issue to a human representative immediately. "
         "7. Maintain professionalism, avoid bias, and ensure all responses are accurate, ethical, and secure."
-        "8. Should the user in anyway indicate that they which to end the call, send a json that includes the key 'goodbye' and the value 'true'."
+        "8. Should the user in anyway indicate that they which to end the call, send a json that includes the key 'goodbye' and the value a goodbye message you generate. Do not include the json markdown in the response."
     )
 
     prev_user_prompts = context["user"]
@@ -44,7 +44,6 @@ def advance_generate_response(context: dict[str, list[str]]):
         messages=all_messages,
         n=1,
     )
-    # print(completion.choices[0].message.content)
 
     return completion.choices[0].message.content
 

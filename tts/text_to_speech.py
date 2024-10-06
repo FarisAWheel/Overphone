@@ -33,6 +33,20 @@ def delete_audio_file(file_path: str):
 
 if __name__ == "__main__":
     text_to_speech(
-        "Testing, testing, 1...2...3. AHHHHHHHHH TESTING TESTING DOES THIS WORK. IS THIS THING ON."
+        """
+        There are several types of bank accounts, each serving different purposes. Here are some common types:
+
+        1. **Checking Account**: This account is used for everyday transactions, such as deposits, withdrawals, and bill payments. It typically offers easy access to funds through checks, debit cards, and ATMs.
+
+        2. **Savings Account**: This account is designed for saving money and usually earns interest. Access to funds is limited to encourage saving.
+
+        3. **Money Market Account**: A hybrid between checking and savings accounts, this account usually offers higher interest rates but may require a higher minimum balance.
+
+        4. **Certificate of Deposit (CD)**: This is a time-bound savings account that offers higher interest rates but requires you to lock in your money for a specific term.
+
+        5. **Retirement Accounts**: These accounts, like IRAs or 401(k)s, are designed for long-term savings for retirement and often come with tax advantages.
+
+        If you have specific questions about any account type or need more details, feel free to ask!
+        """
     )
     print(pathlib.Path(__file__).parent.resolve())

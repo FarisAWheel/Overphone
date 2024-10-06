@@ -9,7 +9,7 @@ path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from AdvanceAI.AdvanceAI import advance_generate_response
 from tts.text_to_speech import text_to_speech
 from Roberta.roberta import roberta_response
-from SignalWire.app import app
+
 
 context_dict: dict[str, dict[str, list[str]]] = {}
 
@@ -24,27 +24,23 @@ def orchestrate(usrPrompt: str, caller_id):
 
     response = advance_generate_response(context_dict[caller_id])
 
-    # Check if the response is a JSON string wrapped in Markdown code block
-    if (
-        isinstance(response, str)
-        and response.startswith("```json")
-        and response.endswith("```")
-    ):
-        try:
-            # Remove the ```json and ``` from the response string
-            response = response.replace("```json", "").replace("```", "").strip()
-            response_json = json.loads(response)
-            if "goodbye" in response_json:
-                
-            response = roberta_response(
-                response_json["name"], response_json["pin"], response_json["question"]
-            )
-        except json.JSONDecodeError:
-            print("Failed to decode JSON response.")
-        except KeyError:
-            print("JSON response does not contain expected keys.")
-    else:
-        print("Response is not a JSON string wrapped in Markdown code block.")
+    try:
+        # Attempt to parse the response as JSON
+        response_json = json.loads(response)
+        if "goodbye" in response_json:
+            # Ensure the directory exists
+            os.makedirs("SignalWire/", exist_ok=True)
+            # Write the goodbye message to a file
+            with open(f"SignalWire/{caller_id}_goodbye.txt", "w") as file:
+                file.write(response_json["goodbye"])
+            return "CALL HAS ENDED"
+        response = roberta_response(
+            response_json["name"], response_json["pin"], response_json["question"]
+        )
+    except json.JSONDecodeError:
+        print("Failed to decode JSON response.")
+    except KeyError:
+        print("JSON response does not contain expected keys.")
 
     print(response)
 
@@ -62,11 +58,6 @@ def delete_context_by_caller_id(caller_id):
 
 if __name__ == "__main__":
     orchestrate(
-        "My name is Alice and my pin is 1234 what is my balance in my account?",
-        "4691234445",
-    )
-
-    orchestrate(
-        "What did I just say?",
+        "This call is over",
         "4691234445",
     )
