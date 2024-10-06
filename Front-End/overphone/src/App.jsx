@@ -15,40 +15,43 @@ function App() {
         <p className="fade-in-on-start">Overphone is an intelligent AI-powered call agent that responds precisely to your specific needs.</p>
         <IoIosArrowDown className="scroll-icon" onClick={handleScrollDown}/>
       </div>
-      <div className="content">
-        <p>Select one of our AI personas to speak to below:</p>
-        <div className="button-container">
-          <button
-            className={`circle-button ${pressedButton === 'Banking' ? 'pressed' : ''}`}
-            onClick={() => handleButtonClick('Banking', pressedButton, setPressedButton)}
-          >
-            Banking
-          </button>
-          <button
-            className={`circle-button ${pressedButton === 'Accelerator' ? 'pressed' : ''}`}
-            onClick={() => handleButtonClick('Accelerator', pressedButton, setPressedButton)}
-          >
-            Accelerator
-          </button>
-          <button
-            className={`circle-button ${pressedButton === 'Mental Health' ? 'pressed' : ''}`}
-            onClick={() => handleButtonClick('Mental Health', pressedButton, setPressedButton)}
-          >
-            Mental Health
-          </button>
+      <div className="content-backdrop">
+        <div className="content">
+          <p>Select one of our AI personas to speak to below:</p>
+          <div className="button-container">
+            <button
+              className={`circle-button ${pressedButton === 'Banking' ? 'pressed' : ''}`}
+              onClick={() => handleButtonClick('Banking', pressedButton, setPressedButton)}
+            >
+              Banking
+            </button>
+            <button
+              className={`circle-button ${pressedButton === 'Accelerator' ? 'pressed' : ''}`}
+              onClick={() => handleButtonClick('Accelerator', pressedButton, setPressedButton)}
+            >
+              Accelerator
+            </button>
+            <button
+              className={`circle-button ${pressedButton === 'Mental Health' ? 'pressed' : ''}`}
+              onClick={() => handleButtonClick('Mental Health', pressedButton, setPressedButton)}
+            >
+              Mental Health
+            </button>
+          </div>
+          <div className="text-field-container">
+            <input
+              type="text"
+              className="text-field"
+              placeholder="Enter your phone number here"
+              value={phoneNumber}
+              onChange={(event) => handleInputChange(event, setPhoneNumber)}
+            />
+            <button className="call-button" onClick={() => handleCallClick(phoneNumber, setErrorMessage)}>Call!</button>
+          </div>
+          <p className="error">{errorMessage}</p> {/* Display error message */}
         </div>
-        <div className="text-field-container">
-          <input
-            type="text"
-            className="text-field"
-            placeholder="Enter your phone number here"
-            value={phoneNumber}
-            onChange={(event) => handleInputChange(event, setPhoneNumber)}
-          />
-          <button className="call-button" onClick={() => handleCallClick(phoneNumber, setErrorMessage)}>Call!</button>
-        </div>
-        <p className="error">{errorMessage}</p> {/* Display error message */}
       </div>
+      
     </>
   );
 }

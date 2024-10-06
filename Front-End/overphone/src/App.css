@@ -15,6 +15,18 @@
   box-sizing: border-box;
 }
 
+.content-backdrop {
+  background: linear-gradient(to right, rgba(170, 169, 192, 0.8), rgba(120, 112, 200, 0.8)); /* Gradient background with transparency */
+  display: flex;
+  width: flex;
+  height: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border:rgb(13, 54, 98);
+  border-radius: 50px;
+}
+
 .highlight {
   color: #cbdf90; /* Set your desired color for "Overphone" */
 }
@@ -31,13 +43,13 @@
 }
 
 .circle-button {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   border: none;
-  background-color: #4b4683;
+  background-color: #3a3376;
   color: rgb(255, 255, 255);
-  font-size: 1rem;
+  font-size: 1.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -46,12 +58,12 @@
 }
 
 .circle-button.pressed {
-  background-color: rgb(13, 54, 98);; /* Change background color when pressed */
+  background-color: #2b246b; /* Change background color when pressed */
   color: yellow; /* Change text color when pressed */
 }
 
 .circle-button:hover {
-  background-color: rgb(13, 54, 98);;
+  background-color: #2b246b;
   color: yellow; /* Change text color on hover */
 }
 
@@ -64,9 +76,9 @@
 }
 
 .text-field {
-  width: 25%; /* Adjust width as needed */
+  width: 26ch; /* Adjust width as needed */
   padding: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
@@ -75,7 +87,7 @@
 
 .call-button {
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   border: none;
   border-radius: 5px;
   background-color: #B0413E;
@@ -104,15 +116,6 @@
   height: auto;
   animation: subtleBounce 2s infinite, fadeInOnStart 2s;
   cursor: pointer;
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @keyframes subtleBounce {

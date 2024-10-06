@@ -31,7 +31,11 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #65609e;
+  background: 
+    linear-gradient(to right, rgba(101, 96, 158, 0.5), rgba(16, 7, 118, 0.5)), /* Gradient background with transparency */
+    linear-gradient(45deg, rgba(255, 255, 255, 0.2) 2px, transparent 2px), /* Diagonal grid lines */
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 2px, transparent 2px); /* Diagonal grid lines */
+  background-size: cover, 40px 40px, 40px 40px; /* Adjust grid size and line thickness */
 }
 
 h1 {
