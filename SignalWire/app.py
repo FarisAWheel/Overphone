@@ -40,7 +40,7 @@ def welcome_handler():
     # Redirects to the gather endpoint to get user input
     gather = Gather(
         input="speech",
-        timeout=30,
+        timeout=60,
         speech_timeout="auto",
         action="/gather",
         method="POST",
