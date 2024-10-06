@@ -39,11 +39,11 @@ def handle_gather():
     response = VoiceResponse()
 
     if digits == '1':
-        persona = "health"
+        persona = "bank"
     elif digits == '2':
         persona = "accelerator"
     elif digits == '3':
-        persona = "education"
+        persona = "health"
     else:
         response.say("Invalid selection. Please try again.")
         gather = Gather(num_digits=1, action="/handle-gather", method="POST")
