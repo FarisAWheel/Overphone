@@ -1,38 +1,27 @@
+from openai import OpenAI
 import pathlib
-import azure.cognitiveservices.speech as speechsdk
-import tempfile
-import uuid
 
 
 def text_to_speech(text: str):
-    subscription_key = "cf799e65820748e798c0ec231f72f082"
-    service_region = "eastus"
-
-    filepath: str = (
+    client = OpenAI()
+    stream_file_path: str = (
         str(pathlib.Path(__file__).parent.resolve())
         + "/audio_files/"
-        + str(uuid.uuid4())
+        + str(abs(hash(text)))
         + ".mp3"
     )
 
-    speech_config = speechsdk.SpeechConfig(
-        subscription=subscription_key,
-        region=service_region,
-    )
-    speech_config.set_speech_synthesis_output_format(
-        speechsdk.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3
-    )
-    speech_config.speech_synthesis_voice_name = "en-US-AriaNeural"
-    temp_file_path = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False).name
-    audio_config = speechsdk.audio.AudioOutputConfig(filename=filepath)
-    speech_synthesizer = speechsdk.SpeechSynthesizer(
-        speech_config=speech_config, audio_config=audio_config
+    response = client.audio.speech.create(
+        model="tts-1",
+        voice="alloy",
+        input=text,
     )
 
-    text_to_speak = text
-    result = speech_synthesizer.speak_text_async(text_to_speak).get()
-
-    return filepath
+    try:
+        response.stream_to_file(stream_file_path)
+        return stream_file_path
+    except:
+        return -1
 
 
 def delete_audio_file(file_path: str):
@@ -43,5 +32,7 @@ def delete_audio_file(file_path: str):
 
 
 if __name__ == "__main__":
-    print(text_to_speech("This is a test of the text to speech function."))
+    text_to_speech(
+        "Testing, testing, 1...2...3. AHHHHHHHHH TESTING TESTING DOES THIS WORK. IS THIS THING ON."
+    )
     print(pathlib.Path(__file__).parent.resolve())
