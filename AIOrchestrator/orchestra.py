@@ -36,7 +36,7 @@ def orchestrate(usrPrompt: str, caller_id, persona: str):
         response = response.replace("```json", "").replace("```", "").strip()
         response = json.loads(response)
         response = roberta_response(
-            response["name"], response["pin"], response["question"]
+            response["question"], response["name"], response["pin"] 
         )
 
         print(response)
@@ -110,7 +110,7 @@ def orchestrate(usrPrompt: str, caller_id):
                 file.write(response_json["goodbye"])
             return "CALL HAS ENDED"
         response = roberta_response(
-            response_json["name"], response_json["pin"], response_json["question"]
+            response_json["question"], response_json["name"], response_json["pin"]
         )
     except json.JSONDecodeError:
         print("Failed to decode JSON response.")
