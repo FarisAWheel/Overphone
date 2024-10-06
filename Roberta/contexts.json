@@ -1,0 +1,70 @@
+{
+    "contexts": {
+        "bank": {
+            "users": [
+                {
+                    "name": "Alice",
+                    "pin": "1234",
+                    "accounts": [
+                        {
+                            "account_type": "savings",
+                            "amount": 5000
+                        }
+                    ]
+                },
+                {
+                    "name": "Bob",
+                    "pin": "5678",
+                    "accounts": [
+                        {
+                            "account_type": "checking",
+                            "amount": 3000
+                        }
+                    ]
+                },
+                {
+                    "name": "Charlie",
+                    "pin": "9101",
+                    "accounts": [
+                        {
+                            "account_type": "business",
+                            "amount": 10000
+                        }
+                    ]
+                }
+            ]
+        },
+        "accelerator": {
+            
+        },
+        "health": {
+            "emergency_procedures": {
+                "suicide": {
+                    "National Suicide Prevention Lifeline": {
+                        "phone": 18002738255,
+                        "description": "24/7 free and confidential support for you or a loved one over the phone"
+                    },
+
+                    "Crisis Text Line": {
+                        "phone": 741741,
+                        "description": "24/7 free and confidential support for you over text"
+                    }
+                },
+
+                "immediate": {
+                    "911": {
+                        "phone": 911,
+                        "description": "24/7 immediate emergency number"
+                    }
+                },
+
+                "abuse": {
+                    "Sexual Assult Hotline": {
+                        "phone": 18007998233,
+                        "description": "24/7 support for anyone affected by sexual assult"
+                    }
+                }
+            }
+        }
+    }
+}
