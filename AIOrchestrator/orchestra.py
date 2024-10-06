@@ -2,6 +2,7 @@
 import os
 import json
 from sys import path
+import pathlib
 
 # Add the path to the parent directory
 path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -12,11 +13,18 @@ from Roberta.roberta import roberta_response
 
 context_dict: dict[str, dict[str, list[str]]] = {}
 
+def load_preprompt(persona: str):
+    preprompt = ""
+    with open(str(pathlib.Path(__file__).parent.resolve()) + "/personas.json",'r') as file:
+        personas_dict = json.load(file)
+        preprompt = personas_dict["personas"][persona]["preprompt"]
+    return preprompt
 
-def orchestrate(usrPrompt: str, caller_id):
+
+def orchestrate(usrPrompt: str, caller_id, persona: str):
     # If this is a new call, create the context for this caller
     if caller_id not in context_dict:
-        context_dict[caller_id] = {"user": [], "assistant": []}
+        context_dict[caller_id] = {"user": [], "assistant": [], "preprompt": load_preprompt(persona)}
 
     # Adds the current user prompt to the context
     context_dict[caller_id]["user"].append(usrPrompt)
@@ -49,8 +57,18 @@ def delete_context_by_caller_id(caller_id):
 
 
 if __name__ == "__main__":
+    persona_input = input("Enter the persona you would like to use: ") 
+    persona_input = persona_input.lower()
     orchestrate(
-        "My name is Alice and my pin is 1234 and I would like to check my balance",
+        "This is a pre-prompt that comes in when the User has succesfully connected, please welcome them accordingly especially according to the preprompt alreadys in system.",
         "4691234445",
+        persona_input
     )
-    orchestrate("What was my last question", "4691234445")
+    user_prompt = ""
+    while user_prompt.lower() != "goodbye":
+        user_prompt = input("Enter your prompt: ") 
+        orchestrate(
+            user_prompt,
+            "4691234445",
+            persona_input
+        )
