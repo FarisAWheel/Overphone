@@ -11,15 +11,13 @@ from AdvanceAI.AdvanceAI import advance_generate_response
 from tts.text_to_speech import text_to_speech
 from Roberta.roberta import roberta_response
 
-context_dict: dict[str, dict[str, list[str]]] = {}
-persona = ""
+context_dict = {}
 
 def load_preprompt(persona: str):
     preprompt = ""
     with open(str(pathlib.Path(__file__).parent.resolve()) + "/personas.json",'r') as file:
         personas_dict = json.load(file)
         preprompt = personas_dict["personas"][persona]["preprompt"]
-        persona = personas_dict["personas"][persona]["persona"]
     return preprompt
 
 
@@ -34,17 +32,24 @@ def orchestrate(usrPrompt: str, caller_id, persona: str):
     response = advance_generate_response(context_dict[caller_id])
 
     try:
-        # Remove the ```json and ``` from the response string
-        response = response.replace("```json", "").replace("```", "").strip()
-        response = json.loads(response)
+        # Attempt to parse the response as JSON
+        response_json = json.loads(response)
+        if "goodbye" in response_json:
+            # Ensure the directory exists
+            os.makedirs("SignalWire/", exist_ok=True)
+            # Write the goodbye message to a file
+            with open(f"SignalWire/{caller_id}_goodbye.txt", "w") as file:
+                file.write(response_json["goodbye"])
+            return "CALL HAS ENDED"
         response = roberta_response(
-            response["question"], persona, response["name"], response["pin"] 
+            response_json["name"], response_json["pin"], response_json["question"]
         )
-
-        print(response)
-
     except json.JSONDecodeError:
-        pass
+        print("Failed to decode JSON response.")
+    except KeyError:
+        print("JSON response does not contain expected keys.")
+
+    print(response)
 
     # Store the new response as an assistant response in the context
     context_dict[caller_id]["assistant"].append(response)
