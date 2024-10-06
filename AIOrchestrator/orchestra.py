@@ -43,7 +43,7 @@ def orchestrate(usrPrompt: str, caller_id, persona: str):
                 file.write(response_json["goodbye"])
             return "CALL HAS ENDED"
         response = roberta_response(
-            response_json["name"], response_json["pin"], response_json["question"]
+             response_json["question"], persona, response_json["name"], response_json["pin"]
         )
     except json.JSONDecodeError:
         print("Failed to decode JSON response.")
@@ -66,13 +66,7 @@ def delete_context_by_caller_id(caller_id):
 
 if __name__ == "__main__":
     orchestrate(
-        "Hello, I want you to do 2+2 for me, thank you man",
-        "123903123",
-        "bank"
-    )
-    
-    orchestrate(
-        "What's ur name man",
+        "Hello, I'd like to check my balance. My pin is 9101 and my name is Charlie",
         "123903123",
         "bank"
     )
