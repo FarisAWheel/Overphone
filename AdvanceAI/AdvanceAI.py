@@ -4,6 +4,7 @@ from sys import path
 
 from openai import OpenAI  # type: ignore
 
+
 def advance_generate_response(context):
     print("user = " + str(context["user"]))
     print("assistant = " + str(context["assistant"]))
@@ -14,7 +15,7 @@ def advance_generate_response(context):
     prev_assistant_responses = context["assistant"]
 
     # Send the pre-prompts as a system command to the gpt before everything else
-    all_messages = [ {"role": "system", "content": preprompts} ]
+    all_messages = [{"role": "system", "content": preprompts}]
     # for i in context["helper files"]:
     #     with open(i, 'r') as file:
     #         all_messages.append({"role": "system", "content": f"This is the {os.path.basename(i)} file:\n" + str(json.load(file))})
@@ -50,7 +51,7 @@ if __name__ == "__main__":
                 "assistant": [
                     "You can access your account by going to the website and entering your credentials"
                 ],
-                "preprompt": ""
+                "preprompt": "",
             },
         )
     )

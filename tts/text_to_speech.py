@@ -22,7 +22,7 @@ def text_to_speech(text: str):
     speech_config.set_speech_synthesis_output_format(
         speechsdk.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3
     )
-    speech_config.speech_synthesis_voice_name = "en-US-AriaNeural"
+    speech_config.speech_synthesis_voice_name = "en-US-AvaMultilingualNeural"
     temp_file_path = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False).name
     audio_config = speechsdk.audio.AudioOutputConfig(filename=filepath)
     speech_synthesizer = speechsdk.SpeechSynthesizer(
