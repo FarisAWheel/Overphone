@@ -1,36 +1,34 @@
 import pathlib
+import azure.cognitiveservices.speech as speechsdk
+import tempfile
 import uuid
-from deepgram import DeepgramClient, SpeakOptions
-
-DEEPGRAM_API_KEY = "cb535db4ca226d274fab7b6631dcf43ebbf41159"
-
-TEXT = {
-    "text": "Deepgram is great for real-time conversations… and also, you can build apps for things like customer support, logistics, and more. What do you think of the voices?"
-}
-FILENAME = ""
 
 
 def text_to_speech(text: str):
-    FILENAME: str = (
+    subscription_key = "cf799e65820748e798c0ec231f72f082"
+    service_region = "eastus"
+
+    filepath: str = (
         str(pathlib.Path(__file__).parent.resolve())
         + "/audio_files/"
         + str(uuid.uuid4())
         + ".mp3"
     )
 
-    try:
-        deepgram = DeepgramClient(DEEPGRAM_API_KEY)
+    speech_config = speechsdk.SpeechConfig(
+        subscription=subscription_key, region=service_region
+    )
+    speech_config.speech_synthesis_voice_name = "en-US-AriaNeural"
+    temp_file_path = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False).name
+    audio_config = speechsdk.audio.AudioOutputConfig(filename=filepath)
+    speech_synthesizer = speechsdk.SpeechSynthesizer(
+        speech_config=speech_config, audio_config=audio_config
+    )
 
-        options = SpeakOptions(
-            model="aura-asteria-en",
-        )
+    text_to_speak = text
+    result = speech_synthesizer.speak_text_async(text_to_speak).get()
 
-        response = deepgram.speak.v("1").save(FILENAME, TEXT, options)
-
-    except Exception as e:
-        print(f"Exception: {e}")
-
-    return FILENAME
+    return filepath
 
 
 def delete_audio_file(file_path: str):
