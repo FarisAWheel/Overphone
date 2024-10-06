@@ -69,11 +69,15 @@ def roberta_response(question, persona, user_name=None, pin=None):
         context = get_user_info(user_name, pin)
         if context == "User not found.":
             return "User not found."
-
         response = pipe(question=question, context=context)
+    
+    if(persona == "accelerator"):
+        print("accelerator")
+    
+    if(persona == "health"):
+        print("health")
 
     return response["answer"]
-
 
 if __name__ == "__main__":
     user_name = "charlie"
