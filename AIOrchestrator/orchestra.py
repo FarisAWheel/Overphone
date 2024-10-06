@@ -9,6 +9,7 @@ path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from AdvanceAI.AdvanceAI import advance_generate_response
 from tts.text_to_speech import text_to_speech
 from Roberta.roberta import roberta_response
+from SignalWire.app import app
 
 context_dict: dict[str, dict[str, list[str]]] = {}
 
@@ -33,6 +34,8 @@ def orchestrate(usrPrompt: str, caller_id):
             # Remove the ```json and ``` from the response string
             response = response.replace("```json", "").replace("```", "").strip()
             response_json = json.loads(response)
+            if "goodbye" in response_json:
+                
             response = roberta_response(
                 response_json["name"], response_json["pin"], response_json["question"]
             )
