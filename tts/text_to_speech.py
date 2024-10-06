@@ -26,7 +26,6 @@ def text_to_speech(text: str):
         )
 
         response = deepgram.speak.v("1").save(FILENAME, TEXT, options)
-        print(response.to_json(indent=4))
 
     except Exception as e:
         print(f"Exception: {e}")
@@ -42,5 +41,5 @@ def delete_audio_file(file_path: str):
 
 
 if __name__ == "__main__":
-    text_to_speech("This is a test of the text to speech function.")
+    print(text_to_speech("This is a test of the text to speech function."))
     print(pathlib.Path(__file__).parent.resolve())
